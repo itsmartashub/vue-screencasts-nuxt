@@ -66,12 +66,12 @@ export default {
 		// videoPlayer,
 	},
 
-	async fetch({store, params}) {
-		await store.dispatch('loadOneVideo', { videoID: params.id })
+	// async fetch({store, params}) { //? premesteno u middleware
+	// 	// await store.dispatch('loadOneVideo', { videoID: params.id })
 
-		// await store.dispatch('loadAllVideos')
-		// await store.dispatch('loadAllTags')
-	},
+	// 	await store.dispatch('loadAllVideos')
+	// 	await store.dispatch('loadAllTags')
+	// },
 
 	computed: {
 		// video() {

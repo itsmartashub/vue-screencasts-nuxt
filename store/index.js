@@ -39,64 +39,65 @@ export const actions = {
 		commit('SET_TAGS', tags.map(t => t.attributes)) //? ovo su tagovi koji su konektovani sa videos, ovo je za sad ok ovako, medjutim kada budemo radili sa admin sectionom zelecemo da admin ima pristup videima i da manipulise njima nezavisno od toga lkom videu pripadaju i ako ne pripadaju ni jednom recimo, zato pravimo ovu loadAllTags action
 	},
 
-	// async loadAllTags({commit}) { //? i sada kao mozemo da obrisemo loadOneVideo i loadTagAndRelationships metod
-	// 	let {data: tags} = await getData('/tags', this.$axios)
+	async loadAllTags({commit}) { //? i sada kao mozemo da obrisemo loadOneVideo i loadTagAndRelationships metod
+		let {data: tags} = await getData('/tags', this.$axios)
 
-	// 	deserializeTags(tags)
-	// 	commit('SET_TAGS', tags.map(t => t.attributes))
-
-	// },
-
-	async loadOneVideo({commit}, {videoID}) {
-		// let response = await this.$axios.get(`/videos/${videoID}`)
-
-		// let video = response.data.data
-		// video.attributes.tag_ids = video.relationships.tags.data.map(t => t.id)
-
-		// let tags = response.data.included
-		// tags.forEach(t => {
-		// 	t.attributes.id = t.id;
-		// })
-
-		let {data: video, included: tags} = await getData(`/videos/${videoID}`, this.$axios)
-
-		deserializeVideos([video]) //! jer koristimo za jedan video, na slican nacin kao ovaj commit SET_VIDEOS sto poslasmo argument
 		deserializeTags(tags)
-		// umesto onog return idemo sa commit
 		commit('SET_TAGS', tags.map(t => t.attributes))
-		commit('SET_VIDEOS', [video.attributes]) // mislis ovi podaci tj ovaj [video.attributes] ce da overwrituje ono gore sto stavismo za videos.map(v => v.attributes), isto i deo za tagove, medjutim, u nuxtu se svi podaci iznova ucitavaju malte ne na svakoj stranici. ovo cemo kasnije promeniti, ali za sad f-ise
+
 	},
 
-	async loadTagAndRelationships({commit}, {tagID}) {
-		// let response = await this.$axios.get(`/tags/${tagID}`)
+	// async loadOneVideo({commit}, {videoID}) {
+	// 	// let response = await this.$axios.get(`/videos/${videoID}`)
 
-		// let videosOnTag = response.data.included.filter(i => i.type === 'video') // ovo ce da vrati nekoliko videa. svakom tom videu ce trebati tag_ids niz koji bi im trebalo dodati bas kao u home page (pages/index.vue):
-		// videosOnTag.forEach(v => {
-		// 	v.attributes.tag_ids = v.relationships.tags.data.map(t => t.id)
-		// })
+	// 	// let video = response.data.data
+	// 	// video.attributes.tag_ids = video.relationships.tags.data.map(t => t.id)
 
-		// let tags = response.data.included.filter(i => i.type === 'tag')
-		// tags.forEach(t => {
-		// 	t.attributes.id = t.id
-		// })
+	// 	// let tags = response.data.included
+	// 	// tags.forEach(t => {
+	// 	// 	t.attributes.id = t.id;
+	// 	// })
 
-		let {included} = await getData(`/tags/${tagID}`, this.$axios)
+	// 	let {data: video, included: tags} = await getData(`/videos/${videoID}`, this.$axios)
 
-		let videosOnTag = included.filter(i => i.type === 'video')
-		deserializeVideos(videosOnTag)
+	// 	deserializeVideos([video]) //! jer koristimo za jedan video, na slican nacin kao ovaj commit SET_VIDEOS sto poslasmo argument
+	// 	deserializeTags(tags)
+	// 	// umesto onog return idemo sa commit
+	// 	commit('SET_TAGS', tags.map(t => t.attributes))
+	// 	commit('SET_VIDEOS', [video.attributes]) // mislis ovi podaci tj ovaj [video.attributes] ce da overwrituje ono gore sto stavismo za videos.map(v => v.attributes), isto i deo za tagove, medjutim, u nuxtu se svi podaci iznova ucitavaju malte ne na svakoj stranici. ovo cemo kasnije promeniti, ali za sad f-ise
+	// },
 
-		let tags = included.filter(i => i.type === 'tag')
-		deserializeTags(tags)
+	// async loadTagAndRelationships({commit}, {tagID}) {
+	// 	// let response = await this.$axios.get(`/tags/${tagID}`)
 
-		commit('SET_VIDEOS', videosOnTag.map(vot => vot.attributes))
-		commit('SET_TAGS', tags.map(t => t.attributes))
-	}
+	// 	// let videosOnTag = response.data.included.filter(i => i.type === 'video') // ovo ce da vrati nekoliko videa. svakom tom videu ce trebati tag_ids niz koji bi im trebalo dodati bas kao u home page (pages/index.vue):
+	// 	// videosOnTag.forEach(v => {
+	// 	// 	v.attributes.tag_ids = v.relationships.tags.data.map(t => t.id)
+	// 	// })
+
+	// 	// let tags = response.data.included.filter(i => i.type === 'tag')
+	// 	// tags.forEach(t => {
+	// 	// 	t.attributes.id = t.id
+	// 	// })
+
+	// 	let {included} = await getData(`/tags/${tagID}`, this.$axios)
+
+	// 	let videosOnTag = included.filter(i => i.type === 'video')
+	// 	deserializeVideos(videosOnTag)
+
+	// 	let tags = included.filter(i => i.type === 'tag')
+	// 	deserializeTags(tags)
+
+	// 	commit('SET_VIDEOS', videosOnTag.map(vot => vot.attributes))
+	// 	commit('SET_TAGS', tags.map(t => t.attributes))
+	// }
 
 }
 
 const deserializeTags = function(tags) {
 	tags.forEach(t => { // nasi tags nemaju id otud ovo
 		t.attributes.id = t.id
+		t.attributes.video_ids = t.relationships.videos.data.map(v => v.id) // dodajemo video_ids u tagove koji se nalaze na odredjenim videima
 	})
 }
 const deserializeVideos = function(videos) {

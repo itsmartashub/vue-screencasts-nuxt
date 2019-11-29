@@ -11,6 +11,14 @@
   </v-app>
 </template>
 
+<script>
+export default {
+	// ne mozemo ovde da stavimo onaj fetch i u njemu onaj if(isInitialPageLoad) i ako je to true da se fetchuju sa apija videi i tagovi za sve childrene, jer u ovom delu fetch nije podrzan, ali jeste middleware!
+	middleware: 'load-videos-and-tags'
+}
+</script>
+
+
 <style>
 
 html {

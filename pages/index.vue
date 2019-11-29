@@ -30,9 +30,9 @@ export default {
 		...mapState(['tags', 'videos']),
 	},
 
-	async fetch({store}) {
-		await store.dispatch('loadAllVideos')
-		// await store.dispatch('loadAllTags')
-	},
+	// async fetch({store}) { //? premestneno u middleware
+	// 	await store.dispatch('loadAllVideos')
+	// 	await store.dispatch('loadAllTags')
+	// },
 }
 </script>
