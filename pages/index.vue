@@ -15,30 +15,24 @@
 
 <script>
 import VideoListVideo from '@/components/VideoListVideo'
+import { mapState } from 'vuex'
 
 export default {
 	components: {
 		VideoListVideo
 	},
-	async asyncData({$axios}) {
-		let response = await $axios.get('/videos')
 
-		//? videos
-		let videos = response.data.data
-		videos.forEach(v => {
-			v.attributes.tag_ids = v.relationships.tags.data.map(t => t.id)
-		})
+	computed: {
+		// ...mapState({
+		// 	tags: state => state.tags,
+		// 	videos: state => state.videos
+		// })
+		...mapState(['tags', 'videos']),
+	},
 
-		//? tags
-		let tags = response.data.included
-		tags.forEach(t => { // nasi tags nemaju id otud ovo
-			t.attributes.id = t.id
-		})
-
-		return {
-			videos: videos.map(v => v.attributes),
-			tags: tags.map(t => t.attributes)
-		}
+	async fetch({store}) {
+		await store.dispatch('loadAllVideos')
+		// await store.dispatch('loadAllTags')
 	},
 }
 </script>

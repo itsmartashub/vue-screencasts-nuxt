@@ -51,7 +51,7 @@
 <script>
 import 'video.js/dist/video-js.css'
 // import { videoPlayer } from 'vue-video-player' // yarn add vue-video-player --save
-// import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Vue from 'vue'
 
 //? mount with SSR
@@ -66,23 +66,11 @@ export default {
 		// videoPlayer,
 	},
 
-	async asyncData({$axios, params}) {
-		let response = await $axios.get(`/videos/${params.id}`)
+	async fetch({store, params}) {
+		await store.dispatch('loadOneVideo', { videoID: params.id })
 
-		//? video singular
-		let video = response.data.data
-		video.attributes.tag_ids = video.relationships.tags.data.map(t => t.id)
-
-		//? tags
-		let tags = response.data.included
-		tags.forEach(t => {
-			t.attributes.id = t.id;
-		})
-
-		return {
-			video: video.attributes,
-			tags: tags.map(t => t.attributes)
-		}
+		// await store.dispatch('loadAllVideos')
+		// await store.dispatch('loadAllTags')
 	},
 
 	computed: {
@@ -95,9 +83,18 @@ export default {
 		// 	isPlayed: 'users/videoIsPlayed'
 		// }),
 		// ...mapState({
-		// 	videos: state => state.videos.videos,
-		// 	currentUser: state => state.users.currentUser
+		// 	// videos: state => state.videos.videos,
+		// 	// currentUser: state => state.users.currentUser,
+		// 	videos: state => state.videos,
+		// 	tags: state => state.tags
 		// }),
+
+		...mapState(['tags', 'videos']),
+
+
+		video() {
+			return this.videos.find(v => v.id == this.$route.params.id)
+		},
 		
 		playerOptions() { // https://www.npmjs.com/package/vue-video-player
 			return {

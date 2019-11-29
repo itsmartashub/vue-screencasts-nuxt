@@ -17,12 +17,13 @@
 			</div> -->
 		</v-card-text>
 
-		<v-card-actions>
+		<v-card-actions class="d-flex flex-wrap">
 			<span v-for="tag_id in video.tag_ids" :key="`${video.id}-${tag_id}`">
 				<v-btn
 					color="#00c58e"
 					class="mr-2"
 					small
+					dark
 					@mousedown.stop
 					:to="`/tags/${tag_id}`"
 				>
@@ -32,7 +33,7 @@
 		</v-card-actions>
 	
 	</v-card>
-	</client-only>
+	</client-only >
 
 </template>
 
