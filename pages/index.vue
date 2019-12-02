@@ -1,6 +1,6 @@
 <template>
   <v-container>
-	  <!-- **************** / **************** -->
+	  <!--//? **************** / **************** -->
 	   <div class="display-4 ma-4 d-flex justify-center">
 			All Videos 
 		</div>
@@ -14,25 +14,24 @@
 </template>
 
 <script>
-import VideoListVideo from '@/components/VideoListVideo'
-import { mapState } from 'vuex'
+	import VideoListVideo from '@/components/VideoListVideo'
+	import { mapState } from 'vuex'
 
-export default {
-	components: {
-		VideoListVideo
-	},
+	export default {
+		components: {
+			VideoListVideo
+		},
 
-	computed: {
-		// ...mapState({
-		// 	tags: state => state.tags,
-		// 	videos: state => state.videos
-		// })
-		...mapState(['tags', 'videos']),
-	},
+		computed: {
+			...mapState({
+				tags: state => state.tags.tags,
+				videos: state => state.videos.videos
+			})
+		},
 
-	// async fetch({store}) { //? premestneno u middleware
-	// 	await store.dispatch('loadAllVideos')
-	// 	await store.dispatch('loadAllTags')
-	// },
-}
+		// async fetch({store}) { //? premestneno u middleware
+		// 	await store.dispatch('loadAllVideos')
+		// 	await store.dispatch('loadAllTags')
+		// },
+	}
 </script>

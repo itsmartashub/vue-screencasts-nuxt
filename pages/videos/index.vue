@@ -1,4 +1,5 @@
 <template>
+<!-- //? **************** /videos **************** -->
 	<div>
 		<nuxt-child />
 		 <!-- ovo je poput router-view,i zahvaljujuci ovome na /videos/1 ruti vidimo i onaj template iz videos/1.vue, bez ovog nismo videli, valjda je samo uzitavao videos.vue, ne razumem. sad smo videos.vue premestili u videos/ tj sad imamo index.vue -->
@@ -50,7 +51,3 @@ export default {
 
 }
 </script>
-
-<style>
-
-</style>

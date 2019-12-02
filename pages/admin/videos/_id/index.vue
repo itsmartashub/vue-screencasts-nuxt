@@ -1,0 +1,68 @@
+<template>
+<!-- //? **************** /admin/videos/8 **************** -->
+	<v-container grid-list-xs>
+		<div class="display-1 pt-3">{{video.name}}</div>
+		<div v-html="video.description"></div>
+
+		<v-combobox :items="tags" 
+							item-text="name" 
+							v-model="videoTags" 
+							multiple
+							chips
+							deletable-chips
+							hide-selected
+							return-object>
+		</v-combobox>
+	</v-container>
+</template>
+
+<script>
+  import { mapState, mapGetters } from 'vuex'
+  import _ from 'lodash'
+
+  export default {
+		computed: {
+			...mapState({
+				videos: state => state.videos.videos,
+				tags: state => state.tags.tags
+			}),
+			...mapGetters({
+				getTag: 'tags/get'
+			}),
+
+			video(){
+				return this.videos.find(v => v.id == this.$route.params.id) || {}
+			},
+
+			videoTags: {
+				get(){
+					let tagIds = this.video.tag_ids
+					return tagIds && tagIds.map(id => this.getTag(id))
+				},
+				async set(newTags) {
+					let createdTag = newTags.find(t => typeof t == 'string')
+
+					if(createdTag){
+						createdTag = await this.$store.dispatch('tags/create', {name: createdTag})
+
+						console.log(newTags)// vide se stringovi u nizu, dok su vec postojeci tagovi objekti, ti stringovi su novokreirani
+
+						this.$store.dispatch('tags/connectToVideo', {tag: createdTag, video: this.video})
+
+					} else {
+						let addedTags = _.differenceBy(newTags, this.videoTags, 'id') //? prvi argument bigger, drugi je smaller, a treci property po kom poredimo prva dva 
+						let removedTags = _.differenceBy(this.videoTags, newTags, 'id') //? u ovom slucaju pcekujemo da videoTags bude veci od newTags
+						
+						if(addedTags.length > 0) {
+							this.$store.dispatch('tags/connectToVideo', {tag: addedTags[0], video: this.video})
+						}
+						if(removedTags.length > 0) {
+							this.$store.dispatch('tags/disconnectFromVideo', {tag: removedTags[0], video: this.video})
+						}
+					}
+				}
+			}
+		},
+
+	}
+</script>

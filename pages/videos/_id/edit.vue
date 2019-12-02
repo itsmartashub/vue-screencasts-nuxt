@@ -1,4 +1,5 @@
 <template>
+<!-- //? **************** /videos/88/edit **************** -->
 	<div>
 		<h1>Editing {{ video.name }}</h1>
 		<nuxt-link :to="`/videos/${video.id}`">

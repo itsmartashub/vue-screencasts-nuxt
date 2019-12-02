@@ -1,4 +1,5 @@
 <template>
+<!-- //? **************** /tags/88 **************** -->
 	<div>
 	<!-- **************** /tags/5 **************** -->
 		<h1 class="display-3 ma-4 d-flex justify-center">Videos with Tag "{{ tag.name }}" </h1>
@@ -58,16 +59,14 @@ export default {
 	// },
 
 	computed: {
-		// ...mapState({
-		// 	videos: state => state.videos,
-		// 	tags: state => state.tags
-		// }),
+		...mapState({
+			tags: state => state.tags.tags,
+			videos: state => state.videos.videos
+		}),
 
-		...mapState(['tags', 'videos']),
-		
 		videosOnTag() {
-			return this.videos.filter(v => {
-				return this.tag.video_ids.includes(v.id.toString()) // dakle vrati sve videe koji u sebi sadrze tagove koji u sebi imaju id odredjenih videa
+			return this.videos.filter(vot => {
+				return this.tag.video_ids.includes(vot.id.toString()) // dakle vrati sve videe koji u sebi sadrze tagove koji u sebi imaju id odredjenih videa
 			})
 		},
 

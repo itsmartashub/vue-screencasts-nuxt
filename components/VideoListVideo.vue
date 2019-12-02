@@ -1,21 +1,23 @@
 <template>
-	<client-only>
-		<v-card
+	<!-- <client-only> -->
+	<v-card
 		width="340px"
 		hover
 		class="ma-2"
-		:to="`/watch/${video.id}`"
 	>
 		<!-- :to="`/watch/${video.id}`" -->
-		<v-img :src="video.thumbnail" />
-		<v-card-title v-if="video.name">{{ video.name }}</v-card-title>
-		<!-- ovo v-if je samo zbog errora u konzoli da ne moze da pronadje vrednost 'name' of undefined, valjda se jos nije ucitalo i onda prikaze err bzvz, zatyo samo ovaj v-if -->
+		<nuxt-link :to="{ path: `/watch/${video.id}` }">
 
-		<v-card-text>
-			<!-- <div v-if="isPlayed(video.id)" class="red--text">
-				<font-awesome-icon icon="check" /> Played
-			</div> -->
-		</v-card-text>
+			<v-img :src="video.thumbnail" />
+			<v-card-title v-if="video.name">{{ video.name }}</v-card-title>
+			<!-- ovo v-if je samo zbog errora u konzoli da ne moze da pronadje vrednost 'name' of undefined, valjda se jos nije ucitalo i onda prikaze err bzvz, zatyo samo ovaj v-if -->
+
+			<v-card-text>
+				<!-- <div v-if="isPlayed(video.id)" class="red--text">
+					<font-awesome-icon icon="check" /> Played
+				</div> -->
+			</v-card-text>
+		</nuxt-link>
 
 		<v-card-actions class="d-flex flex-wrap">
 			<span v-for="tag_id in video.tag_ids" :key="`${video.id}-${tag_id}`">
@@ -33,32 +35,39 @@
 		</v-card-actions>
 	
 	</v-card>
-	</client-only >
+	<!-- </client-only> -->
 
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+	// import { mapGetters } from 'vuex'
 
-export default {
-	// name: 'VideoListVideo',
-	props: ['video', 'tags'],
+	export default {
+		// name: 'VideoListVideo',
+		props: ['video', 'tags'],
 
-	computed: {
-	// 	...mapGetters({
-	// 		getTag: 'tags/get', 
-	// 		isPlayed: 'users/videoIsPlayed'
-	// 	}),
-		// getTag(tagID) {
-		// 	return this.tags.find(t => t.id == tagID)
-		// }
-	},
+		computed: {
+		// 	...mapGetters({
+		// 		getTag: 'tags/get', 
+		// 		isPlayed: 'users/videoIsPlayed'
+		// 	}),
+			// getTag(tagID) {
+			// 	return this.tags.find(t => t.id == tagID)
+			// }
+		},
 
-	methods: {
-		getTag(tagID) {
-			// console.log(tagID, this.tags) // sve je ovo bilo na serveru i nije prikazivao nista u konzoli, ni ovaj log ni errors, vec moramo otici na drugu stranicu pa onda opet na ovu tj onu gde se koristi ova komponenta
-			return this.tags.find(t => t.id == tagID)
-		}
-	},
-}
+		methods: {
+			getTag(IDtag) {
+				// console.log(IDtag, this.tags) // sve je ovo bilo na serveru i nije prikazivao nista u konzoli, ni ovaj log ni errors, vec moramo otici na drugu stranicu pa onda opet na ovu tj onu gde se koristi ova komponenta
+				return this.tags.find(t => t.id == IDtag)
+			}
+		},
+	}
 </script>
+
+<style scoped>
+	a {
+		text-decoration: none;
+		color:black;
+	}
+</style>

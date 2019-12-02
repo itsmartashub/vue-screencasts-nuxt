@@ -1,4 +1,5 @@
 <template>
+<!-- //? **************** /theatre **************** -->
 	<div>
 		<h1>In Theatre</h1>
 	</div>

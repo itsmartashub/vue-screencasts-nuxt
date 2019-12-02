@@ -1,6 +1,6 @@
 <template>
 	<v-container grid-list-xs>
-		<!-- **************** /watch/5 **************** -->
+		<!-- //? **************** /watch/88 **************** -->
 		<v-row>
 			<v-col md="9" cols="12">
 				<!-- <video-player
@@ -38,7 +38,7 @@
 						:to="`/tags/${tag_id}`"
 					>
 						<!-- {{ getTag(tag_id) && getTag(tag_id).name }} -->
-						<!-- brisemo ovo getTag(tag_id) jer ponekad se pojavi neki error dok se ne ucita sve, medjutim, sa nuxt se ne ucitava dok se prvo sve ne renderuje na serveru, zato nece biti errora i mozemo da obrisemo taj deo -->
+						<!-- //* brisemo ovo getTag(tag_id) jer ponekad se pojavi neki error dok se ne ucita sve, medjutim, sa nuxt se ne ucitava dok se prvo sve ne renderuje na serveru, zato nece biti errora i mozemo da obrisemo taj deo -->
 						{{ getTag(tag_id).name }}
 					</v-btn>
 				</span>
@@ -49,75 +49,73 @@
 </template>
 
 <script>
-import 'video.js/dist/video-js.css'
-// import { videoPlayer } from 'vue-video-player' // yarn add vue-video-player --save
-import { mapGetters, mapState } from 'vuex'
-import Vue from 'vue'
+	import 'video.js/dist/video-js.css'
+	// import { videoPlayer } from 'vue-video-player' // yarn add vue-video-player --save
+	import { mapState } from 'vuex'
+	import Vue from 'vue'
 
-//? mount with SSR
-if (process.browser) {
-	const VueVideoPlayer = require('vue-video-player/dist/ssr')
-	Vue.use(VueVideoPlayer)
-}
+	//? mount with SSR
+	if (process.browser) {
+		const VueVideoPlayer = require('vue-video-player/dist/ssr')
+		Vue.use(VueVideoPlayer)
+	}
 
-export default {
-	name: 'VideoWatch',
-	components: {
-		// videoPlayer,
-	},
+	export default {
+		name: 'VideoWatch',
+		components: {
+			// videoPlayer,
+		},
 
-	// async fetch({store, params}) { //? premesteno u middleware
-	// 	// await store.dispatch('loadOneVideo', { videoID: params.id })
+		// async fetch({store, params}) { //? premesteno u middleware
+		// 	// await store.dispatch('loadOneVideo', { videoID: params.id })
 
-	// 	await store.dispatch('loadAllVideos')
-	// 	await store.dispatch('loadAllTags')
-	// },
-
-	computed: {
-		// video() {
-		// 	return this.videos.find(v => v.id == this.$route.params.id) || {}
+		// 	await store.dispatch('loadAllVideos')
+		// 	await store.dispatch('loadAllTags')
 		// },
 
-		// ...mapGetters({
-		// 	getTag: 'tags/get',
-		// 	isPlayed: 'users/videoIsPlayed'
-		// }),
-		// ...mapState({
-		// 	// videos: state => state.videos.videos,
-		// 	// currentUser: state => state.users.currentUser,
-		// 	videos: state => state.videos,
-		// 	tags: state => state.tags
-		// }),
+		computed: {
+			// video() {
+			// 	return this.videos.find(v => v.id == this.$route.params.id) || {}
+			// },
 
-		...mapState(['tags', 'videos']),
+			// ...mapGetters({
+			// 	getTag: 'tags/get',
+			// 	isPlayed: 'users/videoIsPlayed'
+			// }),
+			...mapState({
+				// videos: state => state.videos.videos,
+				// currentUser: state => state.users.currentUser,
+				tags: state => state.tags.tags,
+				videos: state => state.videos.videos
+			}),
 
 
-		video() {
-			return this.videos.find(v => v.id == this.$route.params.id)
+			video() {
+				return this.videos.find(v => v.id == this.$route.params.id)
+			},
+			
+			playerOptions() { // https://www.npmjs.com/package/vue-video-player
+				return {
+					// muted: true,
+					language: 'en',
+					playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
+					sources: [{
+						type: "video/mp4",
+						src: this.video.videoUrl
+					}],
+					poster: this.video.thumbnail,
+					fluid: true // da se video shrinkuje po potrebi
+				}
+			},
 		},
-		
-		playerOptions() { // https://www.npmjs.com/package/vue-video-player
-			return {
-				// muted: true,
-				language: 'en',
-				playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
-				sources: [{
-					type: "video/mp4",
-					src: this.video.videoUrl
-				}],
-				poster: this.video.thumbnail,
-				fluid: true // da se video shrinkuje po potrebi
+
+		methods: {
+			// markPlayed() {
+			// 	this.$store.dispatch('users/markVideoPlayed', this.video.id)
+			// }
+			getTag(IDtag) {
+				return this.tags.find(t => t.id == IDtag)
 			}
 		},
-	},
-
-	methods: {
-		// markPlayed() {
-		// 	this.$store.dispatch('users/markVideoPlayed', this.video.id)
-		// }
-		getTag(tagID) {
-			return this.tags.find(t => t.id == tagID)
-		}
-	},
-}
+	}
 </script>

@@ -1,21 +1,45 @@
 <template>
-  <v-app>
-	  <v-app-bar app color="#00c58e">
-		  <v-btn text to="/">Vue Screencasts</v-btn>
-		  <v-btn text to="/videos">Videos</v-btn>
-	  </v-app-bar>
+	<v-app>
+		<v-app-bar app color="#00c58e">
+			<v-btn text to="/">Vue Screencasts</v-btn>
+			<v-btn text to="/admin/videos">Admin</v-btn>
+		</v-app-bar>
 
-	  <v-content>
+		<v-content>
 			<nuxt />
-	  </v-content>
-  </v-app>
+		</v-content>
+
+		<v-snackbar
+			v-for="(snackbar, index) in snackbars.filter(s => s.showing)"
+			:key="snackbar.text + Math.random()"
+			v-model="snackbar.showing"
+			:timeout="snackbar.timeout"
+			:color="snackbar.color"
+			:style="`bottom: ${(index * 60) + 8}px`"
+		>
+			{{snackbar.text}}
+
+			<v-btn text @click="snackbar.showing = false">
+				Close
+			</v-btn>
+		</v-snackbar>
+
+	</v-app>
 </template>
 
 <script>
-export default {
-	// ne mozemo ovde da stavimo onaj fetch i u njemu onaj if(isInitialPageLoad) i ako je to true da se fetchuju sa apija videi i tagovi za sve childrene, jer u ovom delu fetch nije podrzan, ali jeste middleware!
-	middleware: 'load-videos-and-tags'
-}
+	import { mapState } from 'vuex'
+
+	export default {
+		// ne mozemo ovde da stavimo onaj fetch i u njemu onaj if(isInitialPageLoad) i ako je to true da se fetchuju sa apija videi i tagovi za sve childrene, jer u ovom delu fetch nije podrzan, ali jeste middleware!
+		middleware: 'load-videos-and-tags',
+
+		computed: {
+			...mapState({
+				snackbars: state => state.snackbar.snackbars
+			})
+		},
+	}
 </script>
 
 
