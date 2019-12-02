@@ -2,7 +2,24 @@
 	<v-app>
 		<v-app-bar app color="#00c58e">
 			<v-btn text to="/">Vue Screencasts</v-btn>
-			<v-btn text to="/admin/videos">Admin</v-btn>
+			<v-btn text to="/admin/videos" v-if="$auth.user && $auth.user.admin">Admin</v-btn>
+
+			<v-spacer></v-spacer>
+
+			<div v-if="$auth.loggedIn"><!-- $auth je nesto sto nam nakon instalacije i konfigurisanja u nuxt.config.js sada dostupno svude. $auth ima dostupne dva propertija: loggedIn (boolean) i user -->
+				
+				<!-- 1. username -->
+				{{ $auth.user.email }}
+				<!-- logout btn -->
+				<v-btn color="red" @click="$auth.logout()">Logout</v-btn>
+			</div>
+
+			<div v-else>
+				<!-- login -->
+				<v-btn color="#3b8070" dark to="/login">Login</v-btn>
+				<v-btn color="#35495e" dark to="/register">Register</v-btn>
+				<!-- logout -->
+			</div>
 		</v-app-bar>
 
 		<v-content>

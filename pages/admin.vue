@@ -12,6 +12,9 @@
 
 <script>
 export default {
-	name: 'Admin'
+	name: 'Admin',
+	// middleware: ['auth', 'admin'] //! BITNO, ovo ce sa nuxt auth automatski sam da redirektuje na login page ako korisnik nije autorizovan iliti ulogovan, wowww, i ne moze ni kad u url ukucamo neku admin url adresu, tj childovi i to (recimo /admin/videos). ali mi nije jasno kako on zna da treba da redirektuje na /login bas. MEDJUTIM, ovo nije sasvim dobro, jer recimo i kada se ulogujemo i kao NE ADMIN tj kao korisnik BEZ ADMIN PRIVILEGIJA (ili kada se registruje novi korisnik) ima pristup ADMIN PANELU sto ne zelimo, ofc, zato moramo mi napraviti nas neki custom middleware:
+		//! to mozemo da uradimo na dva nacina, da ovom auth pridruzimo recimo 'admin' middleware, da se prvo odradi 'auth', pa 'admin', ili da kreiramo potpuno novi 'auth-admin' recimo, sto ima mng vise logike nego ovo prethodno
+		middleware: ['auth-admin']
 }
 </script>
