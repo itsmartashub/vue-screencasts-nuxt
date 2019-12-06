@@ -9,7 +9,7 @@
 		<nuxt-link :to="{ path: `/watch/${video.id}` }">
 
 			<v-img :src="video.thumbnail || ''" />
-			<v-card-title v-if="video.name">{{ video.name }}</v-card-title>
+			<v-card-title v-if="video.name" class="title-color">{{ video.name }}</v-card-title>
 			<!-- ovo v-if je samo zbog errora u konzoli da ne moze da pronadje vrednost 'name' of undefined, valjda se jos nije ucitalo i onda prikaze err bzvz, zatyo samo ovaj v-if -->
 
 			<v-card-text>
@@ -75,5 +75,9 @@
 	a {
 		text-decoration: none;
 		color:black;
+	}
+
+	.title-color {
+		color: #35495e !important;
 	}
 </style>

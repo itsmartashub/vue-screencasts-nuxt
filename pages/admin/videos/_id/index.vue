@@ -5,7 +5,14 @@
 		
 		<VideoByline :video="video" />
 
-		<div v-html="video.description"></div>
+		<!-- <div v-html="video.description"></div> -->
+		<!-- <div v-html="markdownDescription"></div> -->
+		<MarkdownDisplay :markdown="video.description" />
+
+		<h3>Code Summary</h3>
+		<!-- <div v-html="markdownCodeSummary"></div> -->
+		<MarkdownDisplay :markdown="video.code_summary" />
+
 
 		<v-combobox :items="tags" 
 							item-text="name" 
@@ -18,18 +25,22 @@
 		</v-combobox>
 
 		<v-btn :to="`/admin/videos/${video.id}/edit`" color="#35495e" dark>Edit</v-btn>
+
+		<v-btn :to="`/watch/${video.id}`" color="#3b8070" dark>Watch</v-btn>
 	</v-container>
 </template>
 
 <script>
 	import { mapState, mapGetters } from 'vuex'
 	import _ from 'lodash'
+	// import marked from 'marked' //? yarn add marked
 	import VideoByline from '@/components/VideoByline'
+	import MarkdownDisplay from '@/components/MarkdownDisplay'
 	
 
   export default {
 	  	name: 'AdminVideoShow',
-		components: { VideoByline },
+		components: { VideoByline, MarkdownDisplay },
 
 		computed: {
 			...mapState({
@@ -43,6 +54,17 @@
 			video(){
 				return this.videos.find(v => v.id == this.$route.params.id) || {}
 			},
+
+			// markdownDescription() {
+			// 	if(this.video.description) {
+			// 		return marked(this.video.description)
+			// 	}
+			// },
+			// markdownCodeSummary() {
+			// 	if (this.video.code_summary) {
+			// 		return marked(this.video.code_summary)
+			// 	}
+			// },
 
 			videoTags: {
 				get(){
@@ -76,3 +98,9 @@
 
 	}
 </script>
+
+<style >
+	/* .title-color {
+		color: #35495e !important;
+	} */
+</style>
