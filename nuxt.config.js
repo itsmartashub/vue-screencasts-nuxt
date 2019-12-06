@@ -50,7 +50,8 @@ export default {
 	** See https://axios.nuxtjs.org/options
 	*/
 	axios: {
-		baseURL: 'http://localhost:3000/api'
+		// baseURL: 'http://localhost:3000/api'
+		baseURL: process.env.BASE_URL || 'http://localhost:3000/api'
 	},
 	/*
 	** Build configuration
@@ -64,7 +65,8 @@ export default {
 	},
 
 	server: {
-		port: 8000 // posto se nas server vrsi na 3000 isto promenili smo port za nuxt
+		// port: 8000 // posto se nas server vrsi na 3000 isto promenili smo port za nuxt
+		port: process.env.PORT || 8000
 	},
 
 	auth: { //? https://auth.nuxtjs.org/schemes/local.html
