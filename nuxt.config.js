@@ -29,6 +29,7 @@ export default {
 	** Plugins to load before mounting the App
 	*/
 	plugins: [
+		'~plugins/vuetify-datetime-picker'
 	],
 	/*
 	** Nuxt.js dev-modules
@@ -61,7 +62,9 @@ export default {
 		** You can extend webpack config here
 		*/
 		extend (config, ctx) {
-		}
+		},
+
+		transpile: ['vuetify-datetime-picker'] //* jer se javlja neki error za ES6, pise u nuxt dokumentaciji za plugins
 	},
 
 	server: {

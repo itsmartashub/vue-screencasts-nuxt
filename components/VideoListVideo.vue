@@ -13,6 +13,8 @@
 			<!-- ovo v-if je samo zbog errora u konzoli da ne moze da pronadje vrednost 'name' of undefined, valjda se jos nije ucitalo i onda prikaze err bzvz, zatyo samo ovaj v-if -->
 
 			<v-card-text>
+				<VideoByline :video="video" />
+
 				<!-- <div v-if="isPlayed(video.id)" class="red--text">
 					<font-awesome-icon icon="check" /> Played
 				</div> -->
@@ -41,10 +43,14 @@
 
 <script>
 	// import { mapGetters } from 'vuex'
+	import VideoByline from '@/components/VideoByline'
 
 	export default {
-		// name: 'VideoListVideo',
+		name: 'VideoListVideo',
+		components: { VideoByline },
+		
 		props: ['video', 'tags'],
+
 
 		computed: {
 		// 	...mapGetters({

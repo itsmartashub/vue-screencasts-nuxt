@@ -32,7 +32,7 @@
 				let video = await this.$store.dispatch('videos/edit', this.video)
 				
 				this.$store.dispatch('snackbar/setSnackbar', {text: `You have successfully edited your video, ${video.name}.`})
-				this.$router.push(`/admin/videos`)
+				this.$router.push(`/admin/videos/${video.id}`)
 			},
 		},
 	}

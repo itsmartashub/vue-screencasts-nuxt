@@ -10,7 +10,7 @@
 				></video-player> -->
 				<!-- pojavi se error 'window is not defined' jer je ovo server side rendering zato smo za razliku od Vue projecta ovde video-player malo drugacije odradili, koristimo v-video-player direktivu, srecom devs su se potrudili da naprave SSR video-player -->
 
-				 <div
+				<div
 				 	class="video-player-box"
 					v-video-player:videoPlayer="playerOptions"
 				>
@@ -20,6 +20,8 @@
 
 			<v-col md="3" cols="12">
 				<div class="display-1">{{ video.name }}</div>
+				<VideoByline :video="video" />
+
 
 				<!-- <div v-if="isPlayed(video.id)" class="red--text">
 					<font-awesome-icon icon="check" /> Played
@@ -53,6 +55,8 @@
 	// import { videoPlayer } from 'vue-video-player' // yarn add vue-video-player --save
 	import { mapState } from 'vuex'
 	import Vue from 'vue'
+	
+	import VideoByline from '@/components/VideoByline'
 
 	//? mount with SSR
 	if (process.browser) {
@@ -61,9 +65,11 @@
 	}
 
 	export default {
+
 		name: 'VideoWatch',
 		components: {
 			// videoPlayer,
+			VideoByline
 		},
 
 		// async fetch({store, params}) { //? premesteno u middleware

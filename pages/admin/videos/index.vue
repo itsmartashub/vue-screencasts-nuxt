@@ -37,6 +37,7 @@ export default {
 	filters: {
 		abbreviate(text) {
 			if(text) {
+				text = text.replace('<p>', '');
 				return text && text.slice(0, 50)
 			}
 		}

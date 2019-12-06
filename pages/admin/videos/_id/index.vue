@@ -2,6 +2,9 @@
 <!-- //? **************** /admin/videos/8 **************** -->
 	<v-container grid-list-xs>
 		<div class="display-1 pt-3">{{video.name}}</div>
+		
+		<VideoByline :video="video" />
+
 		<div v-html="video.description"></div>
 
 		<v-combobox :items="tags" 
@@ -13,14 +16,21 @@
 							hide-selected
 							return-object>
 		</v-combobox>
+
+		<v-btn :to="`/admin/videos/${video.id}/edit`" color="#35495e" dark>Edit</v-btn>
 	</v-container>
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex'
-  import _ from 'lodash'
+	import { mapState, mapGetters } from 'vuex'
+	import _ from 'lodash'
+	import VideoByline from '@/components/VideoByline'
+	
 
   export default {
+	  	name: 'AdminVideoShow',
+		components: { VideoByline },
+
 		computed: {
 			...mapState({
 				videos: state => state.videos.videos,
