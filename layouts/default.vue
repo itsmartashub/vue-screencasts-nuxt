@@ -9,7 +9,7 @@
 			<div v-if="$auth.loggedIn"><!-- $auth je nesto sto nam nakon instalacije i konfigurisanja u nuxt.config.js sada dostupno svude. $auth ima dostupne dva propertija: loggedIn (boolean) i user -->
 				
 				<!-- 1. username -->
-				{{ $auth.user.email }}
+				<span>{{ $auth.user.email }}</span>
 				<!-- logout btn -->
 				<v-btn color="red" @click="$auth.logout()">Logout</v-btn>
 			</div>

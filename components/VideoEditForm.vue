@@ -6,7 +6,7 @@
 			counter=50
 			:rules="[required('name'), minLength('name', 5), maxLength('name', 50)]"
 		/>
-
+<!-- 
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-textarea 
@@ -36,7 +36,40 @@
 			<v-col cols="12" sm="6">
 				<MarkdownDisplay :markdown="video.code_summary" />
 			</v-col>
-		</v-row>
+		</v-row> -->
+		<MarkdownEditor :markdown="video.description">
+			<v-textarea
+				v-model="video.description"
+				label="Description"
+				:rules="[required('description')]"
+				counter=true
+				rows="9"
+			/>
+			<!-- //! sve ovo izmedju otvarajuceg i zatvarajuceg MarkdownEditor taga ce ici na mesto <slot></slot> -->
+		</MarkdownEditor>
+
+		<!-- <MarkdownEditor :markdown="video.code_summary" footerMessage="Please put in some code"> -->
+		<MarkdownEditor :markdown="video.code_summary" number="5">
+			<template #default>
+				<v-textarea
+					v-model="video.code_summary"
+					label="Code Summary"
+					rows="12"
+				/>
+			</template>
+			<!-- //! sve ovo izmedju otvarajuceg i zatvarajuceg MarkdownEditor taga ce ici na mesto <slot></slot>. Elem, sve sto je izmedju MarkdownEditor, a da nije imenovan slot )kao recimo footer) jeste default slot, pa tako sve i da nismo stavili ovo default, ono se podrzumeva da je difolt, ali kad naznacimo ovako sa template #default onda mozemo da koristimo scopedSlots
+			-->
+			<!-- //! SCOPED SLOTS - dakle odavde mozemo da saljemo childrenima neke podatke tj sve ono sto se nalazi u MarkdownEditor-u, ali isto tako odande mozemo ovde da posaljemo neki podatak preko scopedSlots. Recimo u childrenu tamo u footer stavimo v-bind:number="5", a potom ovde dole u #footer slot stavimo scopedProps i preko scopedProps dohvatamo number
+			-->
+			<!--<template #footer="scopedProps">--> <!-- //! skracenica za v-slot je # -->
+				<!-- <h1>Hey {{ scopedProps.number }}</h1> -->
+				<!-- <h1>Hey {{ scopedProps.double }} {{ scopedProps.square }}</h1> -->
+				<!-- //? DESTRUCTURING scopedProps -->
+			<template #footer="{double, square}">
+				<h1>Hey {{ double }} {{ square }}</h1> 
+				Put in some <strong>code</strong>
+			</template>
+		</MarkdownEditor>
 
 
 		<v-text-field 
@@ -70,10 +103,15 @@
 import validations from '@/utils/validations'
 import DurationDisplay from '@/components/DurationDisplay'
 import MarkdownDisplay from '@/components/MarkdownDisplay'
+import MarkdownEditor from '@/components/MarkdownEditor'
 
 export default {
 	name: 'VideoEditForm',
-	components: { DurationDisplay, MarkdownDisplay },
+	components: {
+		DurationDisplay,
+		MarkdownDisplay,
+		MarkdownEditor
+	},
 
 	props: ['video', 'saveVideo', 'buttonText'],
 	
