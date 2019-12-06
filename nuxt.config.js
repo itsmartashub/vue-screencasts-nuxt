@@ -51,7 +51,7 @@ export default {
 	*/
 	axios: {
 		// baseURL: 'http://localhost:3000/api'
-		baseURL: process.env.BASE_URL || 'http://localhost:3000/api'
+		baseURL: process.env.BASE_URL || 'http://localhost:3000/api' //! kada se za heroku logs --tail pojavi error ERROR connect ECONNREFUSED 127.0.0.1:3000 onda moramo da stavimo ovo i onda da konfigurisemo za heroku BASE_URL sa: heroku config:set BASE_URL=urlServera
 	},
 	/*
 	** Build configuration
