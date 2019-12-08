@@ -44,7 +44,16 @@ export default {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/pwa',
-		'@nuxtjs/auth' //? yarn add @nuxtjs/auth @nuxtjs/axios. https://auth.nuxtjs.org/guide/setup.html
+		'@nuxtjs/auth', //? yarn add @nuxtjs/auth @nuxtjs/axios. https://auth.nuxtjs.org/guide/setup.html
+		['nuxt-fontawesome', { //? yarn add nuxt-fontawesome
+			imports: [
+				//import whole set
+				{
+					set: '@fortawesome/free-solid-svg-icons', //? yarn add @fortawesome/free-solid-svg-icons
+					icons: ['fas']
+				},
+			]
+		}]
 	],
 	/*
 	** Axios module configuration

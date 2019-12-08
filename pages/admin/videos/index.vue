@@ -38,7 +38,8 @@ export default {
 		abbreviate(text) {
 			if(text) {
 				text = text.replace('<p>', '');
-				return text && text.slice(0, 50)
+				// return text && text.slice(0, 50)
+				return text.slice(0, 50)
 			}
 		}
 	},

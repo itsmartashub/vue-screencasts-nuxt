@@ -17,8 +17,8 @@ export const mutations = {
 		state.videos = videos
 	},
 	EDIT_VIDEO(state, video) {
-		let v = state.videos.find(v => v.id == video.id)
-		v = video
+		let vid = state.videos.find(v => v.id == video.id)
+		vid = video
 
 		//? Hmmm, a ovako je radjeno u  VueJS projektu, mozda je Jeff skontao da je ovo gore sa find() bolje
 		// state.videos.forEach(v => {

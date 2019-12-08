@@ -97,21 +97,19 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .flex-table {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 33%);
 	padding: 10px;
-	border-bottom: 1px black solid;
+	/* border-bottom: 1px solid silver; */
+}
 
-	&:nth-of-type(2n) {
-		background-color: #dedede;
-	}
-	
-	.actions {
-		* {
-			margin-right: 10px
-		}
-	}
+.flex-table:nth-of-type(2n) {
+	background-color: #dedede;
+}
+
+.actions * {
+	margin: 0 5px;
 }
 </style>

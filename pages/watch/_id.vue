@@ -3,19 +3,7 @@
 		<!-- //? **************** /watch/88 **************** -->
 		<v-row>
 			<v-col md="9" cols="12">
-				<!-- <video-player
-					ref="videoPlayer"
-					:options="playerOptions"
-					@ended="markPlayed"
-				></video-player> -->
-				<!-- pojavi se error 'window is not defined' jer je ovo server side rendering zato smo za razliku od Vue projecta ovde video-player malo drugacije odradili, koristimo v-video-player direktivu, srecom devs su se potrudili da naprave SSR video-player -->
-
-				<div
-				 	class="video-player-box"
-					v-video-player:videoPlayer="playerOptions"
-				>
-               <!-- @ended="markPlayed" -->
-				</div>
+				<VideoWatch :video="video" />
 			</v-col>
 
 			<v-col md="3" cols="12">
@@ -23,14 +11,16 @@
 				<VideoByline :video="video" />
 
 
-				<!-- <div v-if="isPlayed(video.id)" class="red--text">
+				<div v-if="isPlayed(video.id)" class="red--text">
 					<font-awesome-icon icon="check" /> Played
 				</div>
 				<div v-else>
-					<v-btn x-small @click="markPlayed" color="red lighten-1" class="mt-2 mb-5" dark v-if="currentUser.name">Mark Played</v-btn>
-				</div> -->
+					<v-btn x-small @click="markPlayed" color="red lighten-1" class="mt-2 mb-5" dark v-if="$auth.loggedIn">Mark Played</v-btn>
+				</div>
 
-				<div v-html="video.description"></div>
+
+				<MarkdownDisplay :markdown="video.description" />
+
 
 				<span v-for="tag_id in video.tag_ids" :key="tag_id">
 					<v-btn
@@ -47,29 +37,31 @@
 			</v-col>
 
 		</v-row>
+
+		<v-row>
+			<v-col cols="12">
+				<h1>Code Summary</h1>
+				<MarkdownDisplay :markdown="video.code_summary" />
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
 <script>
-	import 'video.js/dist/video-js.css'
-	// import { videoPlayer } from 'vue-video-player' // yarn add vue-video-player --save
-	import { mapState } from 'vuex'
-	import Vue from 'vue'
-	
 	import VideoByline from '@/components/VideoByline'
-
-	//? mount with SSR
-	if (process.browser) {
-		const VueVideoPlayer = require('vue-video-player/dist/ssr')
-		Vue.use(VueVideoPlayer)
-	}
+	import VideoWatch from '@/components/VideoWatch'
+	import MarkdownDisplay from '@/components/MarkdownDisplay'
+	
+	import { mapState, mapGetters } from 'vuex'
 
 	export default {
 
-		name: 'VideoWatch',
+		name: 'Watch',
 		components: {
 			// videoPlayer,
-			VideoByline
+			VideoByline,
+			VideoWatch,
+			MarkdownDisplay
 		},
 
 		// async fetch({store, params}) { //? premesteno u middleware
@@ -80,47 +72,25 @@
 		// },
 
 		computed: {
-			// video() {
-			// 	return this.videos.find(v => v.id == this.$route.params.id) || {}
-			// },
-
-			// ...mapGetters({
-			// 	getTag: 'tags/get',
-			// 	isPlayed: 'users/videoIsPlayed'
-			// }),
+			...mapGetters({
+				isPlayed: 'user/videoIsPlayed'
+			}),
 			...mapState({
-				// videos: state => state.videos.videos,
-				// currentUser: state => state.users.currentUser,
 				tags: state => state.tags.tags,
 				videos: state => state.videos.videos
 			}),
 
-
 			video() {
 				return this.videos.find(v => v.id == this.$route.params.id)
-			},
-			
-			playerOptions() { // https://www.npmjs.com/package/vue-video-player
-				return {
-					// muted: true,
-					language: 'en',
-					playbackRates: [0.7, 1.0, 1.5, 2.0, 2.5, 3.0],
-					sources: [{
-						type: "video/mp4",
-						src: this.video.videoUrl
-					}],
-					poster: this.video.thumbnail,
-					fluid: true // da se video shrinkuje po potrebi
-				}
 			},
 		},
 
 		methods: {
-			// markPlayed() {
-			// 	this.$store.dispatch('users/markVideoPlayed', this.video.id)
-			// }
 			getTag(IDtag) {
 				return this.tags.find(t => t.id == IDtag)
+			},
+			markPlayed() {
+				this.$store.dispatch('user/markVideoPlayed', this.video.id)
 			}
 		},
 	}

@@ -22,7 +22,11 @@
 		computed: {
 			publishedAt() {
 				// return new Date()
-				return this.video.published_at
+				if(this.video.publishedAt) {
+					return this.video.published_at
+				} else {
+					return false
+				}
 			},
 		}
 	}
@@ -32,5 +36,8 @@
 	.publishedOn {
 		color: #3b8070; /* 3b8070 */
 		margin: 3px 0 3px 2px;
+	}
+	small {
+		font-size: 15px;
 	}
 </style>

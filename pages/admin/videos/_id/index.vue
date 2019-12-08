@@ -2,16 +2,18 @@
 <!-- //? **************** /admin/videos/8 **************** -->
 	<v-container grid-list-xs>
 		<div class="display-1 pt-3">{{video.name}}</div>
-		
 		<VideoByline :video="video" />
 
-		<!-- <div v-html="video.description"></div> -->
-		<!-- <div v-html="markdownDescription"></div> -->
-		<MarkdownDisplay :markdown="video.description" />
-
-		<h3>Code Summary</h3>
-		<!-- <div v-html="markdownCodeSummary"></div> -->
-		<MarkdownDisplay :markdown="video.code_summary" />
+		<v-row>
+			<v-col cols="12" sm="6" md="8">
+				<MarkdownDisplay :markdown="video.description" />
+				<h3>Code Summary</h3>
+				<MarkdownDisplay :markdown="video.code_summary" />
+			</v-col>
+			<v-col cols="12" sm="6" md="4">
+				<VideoWatch :video="video" />
+			</v-col>
+		</v-row>
 
 
 		<v-combobox :items="tags" 
@@ -36,11 +38,13 @@
 	// import marked from 'marked' //? yarn add marked
 	import VideoByline from '@/components/VideoByline'
 	import MarkdownDisplay from '@/components/MarkdownDisplay'
+	import VideoWatch from '@/components/VideoWatch'
+
 	
 
   export default {
 	  	name: 'AdminVideoShow',
-		components: { VideoByline, MarkdownDisplay },
+		components: { VideoByline, MarkdownDisplay, VideoWatch },
 
 		computed: {
 			...mapState({

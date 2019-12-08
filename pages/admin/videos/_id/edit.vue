@@ -33,6 +33,8 @@
 				
 				this.$store.dispatch('snackbar/setSnackbar', {text: `You have successfully edited your video, ${video.name}.`})
 				this.$router.push(`/admin/videos/${video.id}`)
+
+				// console.log(this.video);
 			},
 		},
 	}

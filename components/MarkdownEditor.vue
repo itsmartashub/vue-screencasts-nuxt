@@ -12,8 +12,9 @@
 		<v-col cols="12" class="footer">
 			<!-- {{ footerMessage || 'Input some data' }} -->
 			<!-- <slot name="footer" v-bind:number="5">Please input data</slot> -->
-			<slot name="footer" v-bind:square="number * number" v-bind:double="number * 2">Please input data</slot>
+			<!-- <slot name="footer" v-bind:square="number * number" v-bind:double="number * 2">Please input data</slot> -->
 			<!-- //! ovo izmedju <slot>Please input data</slot> je difoltna vrednost, takoreci placeholder -->
+			<slot name="footer">Please input data</slot>
 		</v-col>
 	</v-row>
 </template>
@@ -25,7 +26,8 @@
 		name: 'MarkdownEditor',
 
 		// props: ['markdown', 'footerMessage'],
-		props: ['markdown', 'number'],
+		// props: ['markdown', 'number'],
+		props: ['markdown'],
 
 		components: {
 			MarkdownDisplay,
