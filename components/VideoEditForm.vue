@@ -131,7 +131,21 @@ export default {
 		VideoWatch
 	},
 
-	props: ['video', 'saveVideo', 'buttonText'],
+	// props: ['video', 'saveVideo', 'buttonText'],
+	props: {
+		video: {
+			type: Object,
+			required: true
+		},
+		saveVideo: {
+			type: Function,
+			required: true
+		},
+		buttonText: {
+			type: String,
+			required: true
+		}
+	},
 	
 	data() {
 		return {

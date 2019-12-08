@@ -22,7 +22,13 @@
 
 	export default {
 		name: 'VideoWatch',
-		props: ['video'],
+		// props: ['video'],
+		props: {
+			video: {
+				type: Object,
+				required: true
+			},
+		},
 
 		computed: {
 			playerOptions() { // https://www.npmjs.com/package/vue-video-player

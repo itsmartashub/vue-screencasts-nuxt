@@ -10,7 +10,10 @@
 	export default {
 		name: 'MarkdownDisplay',
 
-		props: ['markdown'],
+		// props: ['markdown'],
+		props: {
+			markdown: String
+		},
 
 		computed: {
 			processedMarkdown() {

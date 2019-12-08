@@ -18,7 +18,13 @@
 
 		components: { DurationDisplay, DateDisplay },
 
-		props: ['video'],
+		// props: ['video'],
+		props: {
+			video: {
+				type: Object,
+				required: true
+			}
+		},
 
 		computed: {
 			publishedAt() {

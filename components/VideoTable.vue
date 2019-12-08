@@ -113,7 +113,23 @@
 	export default {
 		name: 'VideoTable',
 
-		props: ['videos', 'headers', 'customClickAction', 'dense', 'itemsPerPage'], // dodajemo headers u props da setujemo drugacije podatke za home page i za admin page
+		// props: ['videos', 'headers', 'customClickAction', 'dense', 'itemsPerPage'], // dodajemo headers u props da setujemo drugacije podatke za home page i za admin page
+		props: {
+			videos: {
+				type: Array,
+				required: true
+			},
+			headers: {
+				type: Array,
+				required: true
+			},
+			customClickAction: {
+				type: Function,
+				required: false
+			},
+			dense: Boolean,
+			itemsPerPage: Number
+		},
 
 		components: {
 			DurationDisplay,

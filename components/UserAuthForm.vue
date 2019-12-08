@@ -37,11 +37,22 @@ import validations from '@/utils/validations'
 export default {
 	name: 'UserAuthForm',
 
-	props: [
-		'submitForm',
-		'buttonText',
-		'hasName' // ovo zelimo kad je registracija da se prikaze polje, kad je login jok
-	],
+	// props: [
+	// 	'submitForm',
+	// 	'buttonText',
+	// 	'hasName' // ovo zelimo kad je registracija da se prikaze polje, kad je login jok
+	// ],
+	props: {
+		submitForm: {
+			type: Function,
+			required: true
+		},
+		buttonText: {
+			type: String,
+			required: true
+		},
+		hasName: Boolean
+	},
 
 	data() {
 		return {

@@ -27,7 +27,10 @@
 
 		// props: ['markdown', 'footerMessage'],
 		// props: ['markdown', 'number'],
-		props: ['markdown'],
+		// props: ['markdown'],
+		props: {
+			markdown: String
+		},
 
 		components: {
 			MarkdownDisplay,

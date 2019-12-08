@@ -7,7 +7,10 @@
 <script>
 	export default {
 		name: 'DateDisplay',
-		props: ['date']
+		// props: ['date']
+		props: {
+			date: Date
+		}
 		
 	}
 </script>

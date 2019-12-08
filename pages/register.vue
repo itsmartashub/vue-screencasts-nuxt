@@ -1,6 +1,6 @@
 <template>
 	<v-container grid-list-xs>
-		<UserAuthForm buttonText="Register" :submitForm="registerUser" hasName="true" />
+		<UserAuthForm buttonText="Register" :submitForm="registerUser" :hasName="true" />
 	</v-container>
 </template>
 
