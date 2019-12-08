@@ -1,5 +1,5 @@
 <template>
-	<v-row class="editor">
+	<v-row class="editor mb-8">
 		<v-col cols="12" sm="6">
 			<slot></slot>
 			<!-- //! gde god je <slot></slot> tu ce biti ono sto se nalazi izmedju otvarajuceg i zatvarajuceg taga MarkdownEditor u komponenti u kojoj se koristi -->
@@ -37,13 +37,15 @@
 
 <style scoped>
   .footer {
-    background-color: #BBB;
+    background-color: #35495e;
     padding:5px;
     border-radius: 3px;
   }
   .editor {
-    border: 1px solid black;
+    /* border: 1px solid #35495e; */
+	 box-shadow: 0px 3px 8px -1px #35495e;
     border-radius: 4px;
     margin: 10px 0;
+	 color: white;
   }
 </style>

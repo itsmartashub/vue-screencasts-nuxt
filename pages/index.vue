@@ -5,28 +5,44 @@
 			All Videos 
 		</div>
 
-		<div class="d-flex flex-wrap justify-center">
+		<VideoTable :videos="videos" :headers="headers" />
+
+		<!-- <div class="d-flex flex-wrap justify-center">
 			<div v-for="video in videos" :key="video.name">
 				<VideoListVideo :video="video" :tags="tags"></VideoListVideo>
 			</div>
-		</div>
+		</div> -->
   </v-container>
 </template>
 
 <script>
-	import VideoListVideo from '@/components/VideoListVideo'
+	// import VideoListVideo from '@/components/VideoListVideo'
+	import VideoTable from '@/components/VideoTable'
+
 	import { mapState } from 'vuex'
 
 	export default {
 		components: {
-			VideoListVideo
+			// VideoListVideo,
+			VideoTable
 		},
 
 		computed: {
 			...mapState({
-				tags: state => state.tags.tags,
+				// tags: state => state.tags.tags,
 				videos: state => state.videos.videos
-			})
+			}),
+
+			headers() {
+				return [
+					{text: 'Played', value: 'played', sortable: false, width: "70px"},
+					{text: 'Name', value: 'name'},
+					// {text: 'Date', value: 'published_at'},
+					{text: 'Date', value: 'sortable_published_at'},
+					{text: 'Duration', value: 'duration'},
+					{text: 'Tags', value: 'tags', sortable: false},
+				]
+			},
 		},
 
 		// async fetch({store}) { //? premestneno u middleware

@@ -1,23 +1,29 @@
 <template>
 <!-- //? **************** /tags/88 **************** -->
-	<div>
+	<v-container>
 	<!-- **************** /tags/5 **************** -->
 		<h1 class="display-3 ma-4 d-flex justify-center">Videos with Tag "{{ tag.name }}" </h1>
 
-		<div class="d-flex flex-wrap justify-center">
+		<VideoTable :videos="videosOnTag" :headers="headers" />
+
+		<!-- <div class="d-flex flex-wrap justify-center">
 			<div v-for="video in videosOnTag" :key="video.id">
 				<VideoListVideo :video="video" :tags="tags"></VideoListVideo>
 			</div>
-		</div>
-	</div>
+		</div> -->
+	</v-container>
 </template>
 
 <script>
-import VideoListVideo from '@/components/VideoListVideo'
+// import VideoListVideo from '@/components/VideoListVideo'
+import VideoTable from '@/components/VideoTable'
 import { mapState } from 'vuex'
 
 export default {
-	components: { VideoListVideo },
+	components: { 
+		// VideoListVideo,
+		VideoTable
+	},
 
 	// async fetch({store, params, from}) { // ovo from nam kazuje koja je ruta s koje dolazimo
 	// // debugger
@@ -72,7 +78,18 @@ export default {
 
 		tag() {
 			return this.tags.find(t => t.id == this.$route.params.id)
-		}
+		},
+
+		headers() {
+			return [
+				{text: 'Played', value: 'played', sortable: false, width: "70px"},
+				{text: 'Name', value: 'name'},
+				// {text: 'Date', value: 'published_at'},
+				{text: 'Date', value: 'sortable_published_at'},
+				{text: 'Duration', value: 'duration'},
+				{text: 'Tags', value: 'tags', sortable: false},
+			]
+		},
 	},
 }
 </script>
